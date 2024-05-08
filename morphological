@@ -1,0 +1,30 @@
+clc;
+clear all;
+close all;
+a = imread ('circles.png');
+b = im2bw(a,0.4);
+subplot(2,3,1);
+imshow(b);
+title('original binary image');
+c = bwmorph(b,'remove'); % removes interior pixels to obtain outline
+
+subplot(2,3,2);
+imshow(c);
+title('outline of original image');
+d = bwmorph(b,'skel',Inf); % applies operation infinite times till image no longer changes
+subplot(2,3,3);
+imshow(d);
+title('skeleton of original image');
+se = strel('line',11,90); % create a 'line' structuring element
+e = imdilate(b,se); % dilate image with a structuring element
+subplot(2,3,4);
+imshow(e),
+title('dilation of original image');
+f = imerode(b,se); % erode image with a structuring element
+subplot(2,3,5);
+imshow(f),
+title('erosion of original image');
+g = bwmorph(b,'bothat'); % performs morphological "bottom hat" operation
+subplot(2,3,6);
+imshow(g);
+title('bottom hat operation on original image')
